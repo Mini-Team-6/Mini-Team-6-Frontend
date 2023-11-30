@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import HeaderLogo from "../../assets/logo/headerLogo.svg?react";
 import Input from "../../components/Input";
@@ -13,7 +13,6 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error] = useState("");
-  const [searchParams] = useSearchParams();
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
@@ -29,13 +28,11 @@ function LoginPage() {
       const data = await response.json();
       if (response.ok) {
         const { token } = data.data;
-        const redirectUrl = searchParams.get("redirectUrl");
         localStorage.setItem("token", token);
         localStorage.setItem("email", email);
         setIsLoggedIn(true);
         setUserEmail(email);
-        if (redirectUrl) navigate(redirectUrl, { replace: true });
-        else navigate("/");
+        navigate("/");
       } else {
         throw new Error(data.message || "로그인 실패");
       }

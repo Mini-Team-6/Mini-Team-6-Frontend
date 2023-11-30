@@ -10,7 +10,6 @@ import HeaderRoute from "./routes/HeaderRoute";
 import MainStyleRoute from "./routes/MainStyleRoute";
 import SignupPage from "./pages/loginPage/SignupPage";
 import RoomDetailPage from "./pages/roomDetailPage/RoomDetailPage";
-import ReservationHistoryPage from "./pages/reservationPage/ReservationHistoryPage";
 
 function App() {
   return (
@@ -24,7 +23,6 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/reservation" element={<ReservationPage />} />
-          <Route path="/reservation-history" element={<ReservationHistoryPage />} />
           <Route path="/detail/:id" element={<DetailPage />} />
           <Route path="/room/:id" element={<RoomDetailPage />} />
         </Route>

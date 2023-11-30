@@ -1,14 +1,19 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
+
 // hooks
 import { useDetailAPI } from "../../api/detail";
+
 // library
 import { useQuery } from "@tanstack/react-query";
+
 // icon
 import Cart from "../../assets/icons/cart.svg?react";
 import Hotel from "../../assets/icons/defaultHotel.svg";
+
 // style
 import styled from "styled-components";
+
 export interface AccommodationRoom {
   room: {
     roomTypeId: number;
@@ -20,6 +25,7 @@ export interface AccommodationRoom {
     price?: number;
   };
 }
+
 interface accommodationSend {
   roomTypeId: number;
   accommodationId: number;
@@ -29,8 +35,10 @@ interface accommodationSend {
   keyword: string;
   areaCode: string;
 }
+
 function DetailSectionBottom({ room }: AccommodationRoom) {
   const { name, stock, image, capacity, description, roomTypeId, price } = room;
+
   const [currentState, setCurrentState] = useState<accommodationSend>({
     roomTypeId: roomTypeId,
     accommodationId: 0,
@@ -40,19 +48,25 @@ function DetailSectionBottom({ room }: AccommodationRoom) {
     keyword: "",
     areaCode: "",
   });
+
   const { postAccommodationRooms } = useDetailAPI();
+
   const formatPrice = price?.toLocaleString();
+
   const roomState = {
     name: name,
     description: description,
     image: image,
     capacity: capacity,
   };
+
   const navigate = useNavigate();
   const params = useParams();
+
   const moveRoomDetail = () => {
     navigate(`/room/${roomTypeId}`, { state: { roomState } });
   };
+
   const sendQuery = useQuery(
     [
       "sendCart",
@@ -79,6 +93,7 @@ function DetailSectionBottom({ room }: AccommodationRoom) {
       enabled: false,
     }
   );
+
   const sendCart = async () => {
     const searchParams = new URLSearchParams(location.search);
     const checkIn = String(`20${searchParams.get("checkIn")}`);
@@ -87,6 +102,7 @@ function DetailSectionBottom({ room }: AccommodationRoom) {
     const guestNumber = Number(searchParams.get("memberCount"));
     const keyword = String(searchParams.get("keyword"));
     const areaCode = String(searchParams.get("area-code"));
+
     setCurrentState({
       roomTypeId: roomTypeId,
       checkIn: checkIn,
@@ -96,13 +112,16 @@ function DetailSectionBottom({ room }: AccommodationRoom) {
       keyword: keyword,
       areaCode: areaCode,
     });
+
     setTimeout(() => {
       sendQuery.refetch();
       console.log(12);
     }, 300);
   };
+
   const moveReservation = () => {
     const token = localStorage.getItem("token");
+
     if (!token) {
       navigate("/login");
     } else {
@@ -113,6 +132,7 @@ function DetailSectionBottom({ room }: AccommodationRoom) {
       const accomodationName = searchParams.get("keyword") as string;
       const areaCode = searchParams.get("area-code") as string;
       const guestNumber = searchParams.get("memberCount");
+
       const reservation = {
         accomodationId: accommodationId,
         accomodationName: accomodationName,
@@ -125,9 +145,11 @@ function DetailSectionBottom({ room }: AccommodationRoom) {
         capacity: capacity,
         price: price,
       };
+
       navigate("/reservation", { state: { reservation } });
     }
   };
+
   if (sendQuery.error) {
     navigate("/login");
   } else {
@@ -187,7 +209,9 @@ function DetailSectionBottom({ room }: AccommodationRoom) {
     );
   }
 }
+
 export default DetailSectionBottom;
+
 const Container = styled.section`
   position: relative;
   display: flex;
@@ -204,12 +228,13 @@ const Container = styled.section`
 `;
 const TitleSection = styled.h3`
   ${({ theme }) => `
-  padding: 0.4rem 0;
+  padding: 0.4rem 0; 
   color: ${theme.Color.mainFontColor};
   font-size: ${theme.Fs.default};
   font-weight: 600;
 `}
 `;
+
 const BottomSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -217,6 +242,7 @@ const BottomSection = styled.div`
   border-radius: ${({ theme }) => theme.Br.default};
   margin-top: 0.35rem;
 `;
+
 const PriceSection = styled.div`
   ${({ theme }) => `
     span {
@@ -236,6 +262,7 @@ const PriceSection = styled.div`
     border-bottom: ${theme.Border.thinBorder};
   `}
 `;
+
 const RoomSection = styled.div`
   ${({ theme }) => `
     span {
@@ -262,6 +289,7 @@ const RoomSection = styled.div`
     padding-bottom: 0.5rem;
   `}
 `;
+
 const ReserveSection = styled.div`
   ${({ theme }) => `
   span {
@@ -309,6 +337,7 @@ const ReserveSectionTop = styled.div`
   flex-direction: column;
   gap: 0.1rem;
 `;
+
 const Skeleton = styled.div`
   position: absolute;
   bottom: 13px;
@@ -326,6 +355,7 @@ const Skeleton = styled.div`
   background-size: 400% 100%;
   color: rgba(0, 0, 0, 0);
 `;
+
 const SkeletonSpan = styled.div`
   color: ${({ theme }) => theme.Color.componentColor};
   font-size: ${({ theme }) => theme.Fs.caption};

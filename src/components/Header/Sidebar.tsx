@@ -75,7 +75,7 @@ function Sidebar({ isOpen, setIsOpen }: Props) {
             내 정보 관리
           </SidebarMenuBox>
           <SidebarMenuBox onClick={() => handleSidebarMenuClick("/cart")}>장바구니</SidebarMenuBox>
-          <SidebarMenuBox onClick={() => handleSidebarMenuClick("/reservation-history")}>
+          <SidebarMenuBox onClick={() => handleSidebarMenuClick("/reservationlist")}>
             예약내역
           </SidebarMenuBox>
         </SidebarMenuListBox>

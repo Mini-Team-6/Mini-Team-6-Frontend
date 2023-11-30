@@ -23,11 +23,3 @@ export function formatDate(dateString: string): string {
 export function removeHyphensFromDate(dateString: string): string {
   return dateString.replace(/-/g, '');
 }
-
-/** yyyymmdd 형식을 yyyy-mm-dd 형식으로 변환 */
-export function addHyphensToDate(inputDate: string): string {
-  const year = inputDate.slice(0, 4);
-  const month = inputDate.slice(4, 6);
-  const day = inputDate.slice(6, 8);
-  return `${year}-${month}-${day}`;
-}

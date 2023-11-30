@@ -98,7 +98,7 @@ function Header() {
         </HeaderLayout>
       );
 
-    case "reservation-history":
+    case "reservationlist":
       return (
         <HeaderLayout $isBorderBottom>
           <HeaderLeftBox>
